@@ -30,4 +30,15 @@ By using ollama to host LLAMA-3.1 and nomic-embed-text, this project aims to cre
    ```bash
    python rag/agent.py
    ```
+
+
+## Development
+### Formatting
+- `make format` to format the code
+### DEBUG
 - for VSCode users, you can use the provided launch configuration to run: select the file, and click on the play button
+
+### LICENSE
+MIT
+
+Prompt Template Credit to [bhancockio](https://github.com/bhancockio)
