@@ -7,6 +7,7 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_ollama import ChatOllama, OllamaEmbeddings
 
+
 class ChatAgent:
     def __init__(self):
         self.persistent_directory = self._get_persistent_directory()
@@ -21,14 +22,19 @@ class ChatAgent:
         return os.path.join(current_dir, 'db', 'chroma_db_ollama')
 
     def _load_vector_store(self) -> Chroma:
-        return Chroma(persist_directory=self.persistent_directory, embedding_function=self.embeddings)
+        return Chroma(
+            persist_directory=self.persistent_directory,
+            embedding_function=self.embeddings,
+        )
 
     def _create_retriever(self):
         return self.db.as_retriever(search_type='similarity', search_kwargs={'k': 3})
 
     def _create_rag_chain(self):
         contextualize_q_prompt = self._create_contextualize_q_prompt()
-        history_aware_retriever = create_history_aware_retriever(self.llm, self.retriever, contextualize_q_prompt)
+        history_aware_retriever = create_history_aware_retriever(
+            self.llm, self.retriever, contextualize_q_prompt
+        )
         qa_prompt = self._create_qa_prompt()
         question_answer_chain = create_stuff_documents_chain(self.llm, qa_prompt)
         return create_retrieval_chain(history_aware_retriever, question_answer_chain)
@@ -41,11 +47,13 @@ class ChatAgent:
             'without the chat history. Do NOT answer the question, just '
             'reformulate it if needed and otherwise return it as is.'
         )
-        return ChatPromptTemplate.from_messages([
-            ('system', system_prompt),
-            MessagesPlaceholder('chat_history'),
-            ('human', '{input}'),
-        ])
+        return ChatPromptTemplate.from_messages(
+            [
+                ('system', system_prompt),
+                MessagesPlaceholder('chat_history'),
+                ('human', '{input}'),
+            ]
+        )
 
     def _create_qa_prompt(self) -> ChatPromptTemplate:
         system_prompt = (
@@ -57,11 +65,13 @@ class ChatAgent:
             '\n\n'
             '{context}'
         )
-        return ChatPromptTemplate.from_messages([
-            ('system', system_prompt),
-            MessagesPlaceholder('chat_history'),
-            ('human', '{input}'),
-        ])
+        return ChatPromptTemplate.from_messages(
+            [
+                ('system', system_prompt),
+                MessagesPlaceholder('chat_history'),
+                ('human', '{input}'),
+            ]
+        )
 
     def chat(self):
         print("Start chatting with the AI! Type 'exit' to end the conversation.")
@@ -70,12 +80,14 @@ class ChatAgent:
             query = input('You: ')
             if query.lower() == 'exit':
                 break
-            result = self.rag_chain.invoke({'input': query, 'chat_history': chat_history})
+            result = self.rag_chain.invoke(
+                {'input': query, 'chat_history': chat_history}
+            )
             print(f"AI: {result['answer']}")
-            chat_history.extend([
-                HumanMessage(content=query),
-                AIMessage(content=result['answer'])
-            ])
+            chat_history.extend(
+                [HumanMessage(content=query), AIMessage(content=result['answer'])]
+            )
+
 
 if __name__ == '__main__':
     agent = ChatAgent()
