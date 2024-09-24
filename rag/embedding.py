@@ -4,7 +4,7 @@ import os
 
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import OllamaEmbeddings
 
 # Define the directory containing the text file and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -51,14 +51,12 @@ def main():
     # Load FAQs
     docs = load_faqs(file_path)
 
-    # Initialize Hugging Face embeddings
-    logging.debug('Using Hugging Face Transformers')
-    huggingface_embeddings = HuggingFaceEmbeddings(
-        model_name='sentence-transformers/all-mpnet-base-v2'
+    embeddings = OllamaEmbeddings(
+        model='nomic-embed-text',
     )
 
     # Create vector store
-    create_vector_store(docs, huggingface_embeddings, 'chroma_db_huggingface')
+    create_vector_store(docs, embeddings, 'chroma_db_ollama')
     logging.debug('Embedding completed.')
 
 

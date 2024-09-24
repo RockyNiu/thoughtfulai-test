@@ -1226,6 +1226,23 @@ SQLAlchemy = ">=1.4,<3"
 tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
 [[package]]
+name = "langchain-chroma"
+version = "0.1.4"
+description = "An integration package connecting Chroma and LangChain"
+optional = false
+python-versions = "<4,>=3.8.1"
+files = [
+    {file = "langchain_chroma-0.1.4-py3-none-any.whl", hash = "sha256:2877b284fc736bfd31628aa542ed0f5410c3cdc63ad2c670cb67fc360b4a236a"},
+    {file = "langchain_chroma-0.1.4.tar.gz", hash = "sha256:5963a79bf72af0f72019084bbc1e610d03ba33ec2df9a4b47b27c0132aa533fb"},
+]
+
+[package.dependencies]
+chromadb = ">=0.4.0,<0.5.4 || >0.5.4,<0.5.5 || >0.5.5,<0.6.0"
+fastapi = ">=0.95.2,<1"
+langchain-core = {version = ">=0.1.40,<0.4", markers = "python_version >= \"3.9\""}
+numpy = {version = ">=1.26.0,<2.0.0", markers = "python_version >= \"3.12\""}
+
+[[package]]
 name = "langchain-community"
 version = "0.3.0"
 description = "Community contributed LangChain integrations."
@@ -1271,24 +1288,6 @@ pydantic = [
 PyYAML = ">=5.3"
 tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 typing-extensions = ">=4.7"
-
-[[package]]
-name = "langchain-huggingface"
-version = "0.1.0"
-description = "An integration package connecting Hugging Face and LangChain"
-optional = false
-python-versions = "<4.0,>=3.9"
-files = [
-    {file = "langchain_huggingface-0.1.0-py3-none-any.whl", hash = "sha256:1b3dc44f460ba205f7c13cf48379a7f809ac9e056ea741bd12fc6414ac6aefb7"},
-    {file = "langchain_huggingface-0.1.0.tar.gz", hash = "sha256:fa77a9545de77e7be4a7de134f692da413fc3b2b99d364fc9bcd0c6fa6fcb35c"},
-]
-
-[package.dependencies]
-huggingface-hub = ">=0.23.0"
-langchain-core = ">=0.3.0,<0.4"
-sentence-transformers = ">=2.6.0"
-tokenizers = ">=0.19.1"
-transformers = ">=4.39.0"
 
 [[package]]
 name = "langchain-ollama"
@@ -4197,4 +4196,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12, <4.0"
-content-hash = "e5afac0ec0e1e5ea0e600cd80cd396bf08229d85fdf0871a6025607cc248660f"
+content-hash = "7d776c02c083a87b151b1f8a9d8cead55d127e9cc0d70c105129c9fb39a67eb2"
